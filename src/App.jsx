@@ -21,8 +21,6 @@ function App() {
         <Route element={<Stream />} path="/watch/:animeId/:episodeId" />
       </Routes>
 
-      {/* <ReactQueryDevtools /> */}
-
       <Footer />
     </div>
   );
