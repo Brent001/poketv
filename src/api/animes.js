@@ -6,3 +6,10 @@ export const getAnimes = async () => {
   );
   return res.data;
 };
+
+export const getAnimeDetails = async (id) => {
+  const res = await axios.get(
+    `https://api.consumet.org/meta/anilist/info/${id}`
+  );
+  return res.data;
+};

@@ -4,32 +4,16 @@ import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import DetailsCard from "../components/DetailsCard";
+import { useQuery } from "@tanstack/react-query";
+import { getAnimeDetails } from "../api/animes";
 
 const Anime = () => {
   const { animeId } = useParams();
+  const { data: anime, status } = useQuery({
+    queryKey: ["animes", parseInt(animeId)],
+    queryFn: () => getAnimeDetails(animeId),
+  });
   const descElement = useRef(null);
-  const [anime, setAnime] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `https://api.consumet.org/meta/anilist/info/${animeId}`
-        );
-        setError(null);
-        setIsLoading(false);
-        setAnime(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error.message);
-        setError(error.message);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [animeId]);
 
   useEffect(() => {
     if (anime === null) return;
@@ -38,8 +22,8 @@ const Anime = () => {
     descElement.current.innerHTML = anime.description;
   }, [anime]);
 
-  if (isLoading) return <Loading />;
-  if (error) return <Error />;
+  if (status === "loading") return <Loading />;
+  if (status === "error") return <Error />;
 
   return (
     <div
