@@ -6,6 +6,7 @@ import Anime from "./pages/Anime";
 import Menu from "./components/Menu";
 import { useState } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Stream from "./pages/Stream";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Anime />} path="/anime/:animeId" />
+        <Route element={<Stream />} path="/watch/:animeId/:episodeId" />
       </Routes>
       <ReactQueryDevtools />
       <Footer />

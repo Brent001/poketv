@@ -1,11 +1,11 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import DetailsCard from "../components/DetailsCard";
 import { useQuery } from "@tanstack/react-query";
 import { getAnimeDetails } from "../api/animes";
+import AnimeCard from "../components/AnimeCard";
 
 const Anime = () => {
   const { animeId } = useParams();
@@ -26,37 +26,50 @@ const Anime = () => {
   if (status === "error") return <Error />;
 
   return (
-    <div
-      className="flex-grow flex"
-      style={{
-        background: `url(${anime.cover})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="w-full flex flex-grow backdrop-blur-md bg-[rgba(0,0,0,.4)]">
-        <div className="max-w-[1200px] w-full justify-center mx-auto flex flex-col gap-4 p-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-shrink-0 w-[200px] mx-auto md:mx-0">
-              <img
-                src={anime.image}
-                alt={
-                  anime.title.english ? anime.title.english : anime.title.native
-                }
-                className="w-full h-full object-cover object-center"
-              />
+    <>
+      <div
+        className="flex-grow flex"
+        style={{
+          background: `url(${anime.cover})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="w-full flex flex-grow backdrop-blur-md bg-[rgba(0,0,0,.4)]">
+          <div className="max-w-[1200px] w-full justify-center mx-auto flex flex-col gap-4 p-4">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-shrink-0 w-[200px] mx-auto md:mx-0">
+                <img
+                  src={anime.image}
+                  alt={
+                    anime.title.english
+                      ? anime.title.english
+                      : anime.title.native
+                  }
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+
+              <DetailsCard anime={anime} />
             </div>
 
-            <DetailsCard anime={anime} />
-          </div>
-
-          <div className="p-4 rounded-md backdrop-blur-lg bg-[rgba(255,255,255,.5)]">
-            <h4 className="font-bold text-2xl mb-2">Description</h4>
-            <p ref={descElement} className="text-sm"></p>
+            <div className="p-4 rounded-md backdrop-blur-lg bg-[rgba(255,255,255,.5)]">
+              <h4 className="font-bold text-2xl mb-2">Description</h4>
+              <p ref={descElement} className="text-sm"></p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <div className="max-w-[1200px] p-4 mx-auto">
+        <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {anime.recommendations.slice(0, 6).map((anime) => (
+            <AnimeCard key={anime.id} anime={anime} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
