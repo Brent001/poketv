@@ -29,12 +29,6 @@ const DetailsCard = ({ anime }) => {
         <span className="font-bold">Start Date:</span> {anime.startDate.month}/
         {anime.startDate.day}/{anime.startDate.year}
       </p>
-      <p>
-        <span className="font-bold">Langage:</span> {anime.subOrDub}
-      </p>
-      <p>
-        <span className="font-bold">Type:</span> {anime.type}
-      </p>
 
       <div className="flex gap-2">
         <Link

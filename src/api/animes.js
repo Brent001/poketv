@@ -20,3 +20,10 @@ export const getStreamingLinks = async (id) => {
   );
   return res.data;
 };
+
+export const findAnime = async (query, page) => {
+  const res = await axios.get(
+    `https://api.consumet.org/meta/anilist/${query}?page=${page}`
+  );
+  return res.data;
+};
