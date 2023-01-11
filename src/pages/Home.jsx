@@ -1,34 +1,18 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AnimeCard from "../components/AnimeCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
+import { useQuery } from "@tanstack/react-query";
+import { getAnimes } from "../api/animes";
 
 const Home = () => {
-  const [animes, setAnimes] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data: animes, status } = useQuery({
+    queryKey: ["animes"],
+    queryFn: getAnimes,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          "https://api.consumet.org/meta/anilist/trending?perPage=60"
-        );
-        setError(null);
-        setIsLoading(false);
-        setAnimes(res.data);
-      } catch (error) {
-        console.log(error.message);
-        setError(error.message);
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (isLoading) return <Loading />;
-  if (error) return <Error />;
+  if (status === "loading") return <Loading />;
+  if (status === "error") return <Error />;
 
   return (
     <div className="flex-grow">
