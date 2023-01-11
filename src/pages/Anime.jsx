@@ -1,25 +1,25 @@
 import React, { useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+
+import { getAnimeDetails } from "../api/animes";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import DetailsCard from "../components/DetailsCard";
-import { useQuery } from "@tanstack/react-query";
-import { getAnimeDetails } from "../api/animes";
 import AnimeCard from "../components/AnimeCard";
+import DetailsCard from "../components/DetailsCard";
 
 const Anime = () => {
   const { animeId } = useParams();
+  const descElement = useRef(null);
+
   const { data: anime, status } = useQuery({
     queryKey: ["animes", parseInt(animeId)],
     queryFn: () => getAnimeDetails(animeId),
   });
-  const descElement = useRef(null);
 
   useEffect(() => {
-    if (anime === null) return;
-    if (descElement.current === null) return;
-
-    descElement.current.innerHTML = anime.description;
+    if (anime && descElement.current)
+      descElement.current.innerHTML = anime.description;
   }, [anime]);
 
   if (status === "loading") return <Loading />;
@@ -64,8 +64,8 @@ const Anime = () => {
       <div className="max-w-[1200px] p-4 mx-auto">
         <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {anime.recommendations.slice(0, 6).map((anime) => (
-            <AnimeCard key={anime.id} anime={anime} />
+          {anime.recommendations.slice(0, 6).map((item) => (
+            <AnimeCard key={item.id} anime={item} />
           ))}
         </div>
       </div>

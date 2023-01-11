@@ -20,7 +20,7 @@ const AnimeCard = ({ anime }) => {
       </div>
 
       <div className="p-4">
-        <h3 className="capitalize font-medium overflow-hidden text-ellipsis whitespace-nowrap">
+        <h3 className="font-medium overflow-hidden text-ellipsis whitespace-nowrap">
           {animeTitle}
         </h3>
 

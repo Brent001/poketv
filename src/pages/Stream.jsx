@@ -1,12 +1,11 @@
 import React from "react";
-import Player from "../components/Player";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAnimeDetails, getStreamingLinks } from "../api/animes";
+import Player from "../components/Player";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 const Stream = () => {
   const { animeId, episodeId } = useParams();
@@ -19,7 +18,7 @@ const Stream = () => {
 
   const { data: anime, status: animeStatus } = useQuery({
     enabled: stream != null,
-    queryKey: ["animes", parseInt(animeId)],
+    queryKey: ["animes", animeId],
     queryFn: () => getAnimeDetails(animeId),
   });
 
