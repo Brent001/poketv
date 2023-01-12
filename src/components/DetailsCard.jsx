@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavoris, removeFavoris } from "../redux/animeSlice";
+import { BsCheck, BsCheckLg, BsPlayFill, BsStarFill } from "react-icons/bs";
 
 const DetailsCard = ({ anime, isDub, toggleDub }) => {
   const { favoris } = useSelector((state) => state.anime);
@@ -20,8 +21,8 @@ const DetailsCard = ({ anime, isDub, toggleDub }) => {
     }
   }, [anime.id, favoris]);
 
-  const handleFavoris = (isInFavoris) => {
-    if (isInFavoris) {
+  const handleFavoris = () => {
+    if (isFavoris) {
       dispatch(removeFavoris(anime));
     } else {
       dispatch(addFavoris(anime));
@@ -56,30 +57,31 @@ const DetailsCard = ({ anime, isDub, toggleDub }) => {
       </p>
 
       <div className="flex gap-4 mt-4">
-        {isFavoris && (
-          <button
-            className="btn bg-black text-white"
-            onClick={() => handleFavoris(true)}
-          >
-            Remove Favoris
-          </button>
-        )}
-
-        {!isFavoris && (
-          <button
-            className="btn bg-black text-white"
-            onClick={() => handleFavoris(false)}
-          >
-            Add Favoris
-          </button>
-        )}
+        <button
+          className="btn bg-black flex gap-2 items-center justify-center text-white
+          "
+          onClick={() => handleFavoris()}
+        >
+          {isFavoris ? (
+            <>
+              Added
+              <BsCheckLg />
+            </>
+          ) : (
+            <>
+              Favoris
+              <BsStarFill />
+            </>
+          )}
+        </button>
 
         {anime.episodes.length > 0 && (
           <Link
             to={`/watch/${anime.id}/${isDub}/${anime.episodes[0].id}`}
-            className="btn bg-black text-white"
+            className="btn flex gap-2 bg-black items-center justify-center text-white"
           >
-            Watch Now
+            Watch
+            <BsPlayFill className="text-2xl" />
           </Link>
         )}
 
