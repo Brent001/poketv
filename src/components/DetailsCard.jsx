@@ -30,7 +30,7 @@ const DetailsCard = ({ anime }) => {
         {anime.startDate.year}
       </p>
 
-      {anime.episodes && (
+      {anime.episodes.length > 0 && (
         <Link
           to={`/watch/${anime.id}/${anime.episodes[0].id}`}
           className="btn self-start"
