@@ -22,3 +22,9 @@ vds-media {
   display: inline-block;
   width: 100%;
 }
+vds-media:not(:defined) {
+  visibility: hidden;
+}
+vds-media:not(:defined) > template[shadowroot] ~ * {
+  visibility: hidden;
+}

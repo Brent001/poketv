@@ -5,13 +5,9 @@ import "@vidstack/player/hydrate.js";
 const Player = ({ sources }) => {
   return (
     <Media>
-      <AspectRatio ratio="16/9" maxHeight="720px">
+      <AspectRatio ratio="16/9">
         <Hls controls>
-          <video preload="none" data-video="0">
-            {sources.map((source) => (
-              <source key={source.url} src={source.url} />
-            ))}
-          </video>
+          <video src={sources[0].url} preload="none" data-video="0" controls />
         </Hls>
       </AspectRatio>
     </Media>

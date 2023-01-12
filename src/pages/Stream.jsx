@@ -80,8 +80,9 @@ const Stream = () => {
               )}
             </div>
           </div>
+
           <Player sources={stream.sources} />
-          <div className="flex gap-4"></div>
+
           <div className="mt-4">
             <p>
               <span className="font-medium">
