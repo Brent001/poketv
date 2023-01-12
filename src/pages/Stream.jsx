@@ -8,7 +8,9 @@ import Error from "../components/Error";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const Stream = () => {
-  const { animeId, episodeId } = useParams();
+  const { animeId, episodeId, lang } = useParams();
+  const baseUlr = `/watch/${animeId}/${lang}`;
+
   const navigate = useNavigate();
 
   const { data: stream, status } = useQuery({
@@ -18,8 +20,8 @@ const Stream = () => {
 
   const { data: anime, status: animeStatus } = useQuery({
     enabled: stream != null,
-    queryKey: ["animes", animeId],
-    queryFn: () => getAnimeDetails(animeId),
+    queryKey: ["animes", animeId, lang],
+    queryFn: () => getAnimeDetails(animeId, lang),
   });
 
   if (status === "loading" || animeStatus === "loading") return <Loading />;
@@ -34,7 +36,7 @@ const Stream = () => {
   const prevEpId =
     anime.episodes[prevEpIndex] && anime.episodes[prevEpIndex].id;
 
-  const handleSelect = (e) => navigate(`/watch/${animeId}/${e.target.value}`);
+  const handleSelect = (e) => navigate(`${baseUlr}/${e.target.value}`);
 
   return (
     <div
@@ -64,15 +66,16 @@ const Stream = () => {
             <div className="flex gap-2">
               {prevEpId && (
                 <Link
-                  to={`/watch/${animeId}/${prevEpId}`}
+                  to={`${baseUlr}/${prevEpId}`}
                   className="p-2 text-2xl rounded-md border-2 border-red-500 text-red-500"
                 >
                   <FiChevronLeft />
                 </Link>
               )}
+
               {nextEpId && (
                 <Link
-                  to={`/watch/${animeId}/${nextEpId}`}
+                  to={`${baseUlr}/${nextEpId}`}
                   className="p-2 text-2xl rounded-md border-2 border-red-500 text-red-500"
                 >
                   <FiChevronRight />

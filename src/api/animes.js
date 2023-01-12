@@ -2,14 +2,14 @@ import axios from "axios";
 
 export const getAnimes = async () => {
   const res = await axios.get(
-    "https://api.consumet.org/meta/anilist/trending?perPage=60"
+    "https://api.consumet.org/meta/anilist/trending?perPage=100"
   );
   return res.data;
 };
 
-export const getAnimeDetails = async (id) => {
+export const getAnimeDetails = async (id, dub) => {
   const res = await axios.get(
-    `https://api.consumet.org/meta/anilist/info/${id}`
+    `https://api.consumet.org/meta/anilist/info/${id}?dub=${dub}`
   );
   return res.data;
 };

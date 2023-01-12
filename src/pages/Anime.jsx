@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
@@ -10,11 +10,13 @@ import DetailsCard from "../components/DetailsCard";
 
 const Anime = () => {
   const { animeId } = useParams();
+  const [isDub, setIsDub] = useState(false);
+  const toggleDub = () => setIsDub((prev) => !prev);
   const descElement = useRef(null);
 
   const { data: anime, status } = useQuery({
-    queryKey: ["animes", parseInt(animeId)],
-    queryFn: () => getAnimeDetails(animeId),
+    queryKey: ["animes", parseInt(animeId), isDub],
+    queryFn: () => getAnimeDetails(animeId, isDub),
   });
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const Anime = () => {
                 />
               </div>
 
-              <DetailsCard anime={anime} />
+              <DetailsCard anime={anime} isDub={isDub} toggleDub={toggleDub} />
             </div>
 
             <div className="p-4 rounded-md backdrop-blur-lg bg-[rgba(255,255,255,.5)]">

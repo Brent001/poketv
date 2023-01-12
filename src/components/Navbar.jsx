@@ -11,12 +11,16 @@ const nav = [
     title: "Search",
     link: "/search",
   },
+  {
+    title: "Favoris",
+    link: "/favoris",
+  },
 ];
 
 const Navbar = () => {
   return (
     <div className="w-full bg-white sticky top-0 shadow-sm z-10">
-      <div className="p-4 h-full max-w-[1200px] mx-auto flex justify-between items-center">
+      <div className="p-4 h-full max-w-[1200px] mx-auto flex flex-col gap-6 justify-between items-center md:flex-row md:gap-0 ">
         <Logo />
 
         <ul className="flex gap-2">
