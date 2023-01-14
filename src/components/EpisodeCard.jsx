@@ -1,23 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import epImg from "../assets/placeholder.webp";
 
 const EpisodeCard = ({ episode }) => {
   return (
-    <Link className="overflow-hidden shadow-md bg-white rounded-md" to="/">
-      <div className="w-full h-48 overflow-hidden">
-        <img
-          src={episode.image}
-          alt={episode.title}
-          className="object-cover object-center w-full h-full transition-all hover:scale-110"
-        />
-      </div>
-
-      <div className="p-4">
-        <h3 className="font-medium overflow-hidden text-ellipsis whitespace-nowrap">
+    <Link href="/" className="bg-white rounded-lg overflow-hidden shadow-lg">
+      <img className="w-full" src={epImg} alt={episode.title} />
+      <div className="px-6 py-4">
+        <div className="font-bold text-lg mb-2 whitespace-nowrap text-ellipsis overflow-hidden">
           {episode.title}
-        </h3>
-
-        <p className="text-sm">Episodes {episode.number}</p>
+        </div>
+        <p className="text-gray-700 text-base">Episode {episode.number}</p>
       </div>
     </Link>
   );

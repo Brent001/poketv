@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavoris, removeFavoris } from "../redux/animeSlice";
-import { BsCheck, BsCheckLg, BsPlayFill, BsStarFill } from "react-icons/bs";
+import {
+  BsCheckLg,
+  BsPlayFill,
+  BsStarFill,
+  BsArrowLeftRight,
+} from "react-icons/bs";
 
 const DetailsCard = ({ anime, isDub, toggleDub }) => {
   const { favoris } = useSelector((state) => state.anime);
@@ -64,12 +69,12 @@ const DetailsCard = ({ anime, isDub, toggleDub }) => {
         >
           {isFavoris ? (
             <>
-              Added
+              <span className="hidden md:block">Added</span>
               <BsCheckLg />
             </>
           ) : (
             <>
-              Favoris
+              <span className="hidden md:block">Favoris</span>
               <BsStarFill />
             </>
           )}
@@ -80,28 +85,18 @@ const DetailsCard = ({ anime, isDub, toggleDub }) => {
             to={`/watch/${anime.id}/${isDub}/${anime.episodes[0].id}`}
             className="btn flex gap-2 bg-black items-center justify-center text-white"
           >
-            Watch
+            <span className="hidden md:block">Watch</span>
             <BsPlayFill className="text-2xl" />
           </Link>
         )}
 
-        {isDub && (
-          <button
-            className="btn bg-black text-white"
-            onClick={() => toggleDub()}
-          >
-            Switch To Sub
-          </button>
-        )}
-
-        {!isDub && (
-          <button
-            className="btn bg-black text-white"
-            onClick={() => toggleDub()}
-          >
-            Switch To Dub
-          </button>
-        )}
+        <button
+          className="btn bg-black text-white flex items-center gap-2 uppercase"
+          onClick={() => toggleDub()}
+        >
+          <span>{isDub ? "Sub" : "Dub"}</span>
+          <BsArrowLeftRight />
+        </button>
       </div>
     </div>
   );

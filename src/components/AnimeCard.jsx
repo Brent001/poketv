@@ -24,7 +24,9 @@ const AnimeCard = ({ anime }) => {
           {animeTitle}
         </h3>
 
-        <p className="text-sm">Episodes {anime.totalEpisodes}</p>
+        <p className="text-gray-700 text-base">
+          Episodes {anime.totalEpisodes}
+        </p>
       </div>
     </Link>
   );

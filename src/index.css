@@ -28,3 +28,26 @@ vds-media:not(:defined) {
 vds-media:not(:defined) > template[shadowroot] ~ * {
   visibility: hidden;
 }
+
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb:hover {
+  background: #808080;
+}

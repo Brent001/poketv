@@ -9,8 +9,10 @@ const Footer = () => {
         <span className="text-xs uppercase font-bold">Made by Lamine</span>
         <span className="w-2 h-2 bg-red-500 rotate-45"></span>
         <a
-          href="/"
+          href="https://buymeacoffee.com/nemila"
+          target="_blank"
           className="text-red-500 text-xs uppercase font-bold hover:underline"
+          rel="noreferrer"
         >
           Buy me a coffee
         </a>

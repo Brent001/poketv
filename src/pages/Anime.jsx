@@ -64,15 +64,14 @@ const Anime = () => {
 
       <div className="max-w-[1200px] p-4 mx-auto">
         <h2 className="text-2xl font-bold mb-4">Episodes</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-h-[400px] overflow-y-auto">
           {anime.episodes.length > 0 &&
-            anime.episodes.map((item) => (
-              <EpisodeCard key={item.id} episode={item} />
-            ))}
+            anime.episodes.map((item) => <EpisodeCard episode={item} />)}
         </div>
 
         <h2 className="text-2xl font-bold my-4">Recommendations</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {anime.recommendations.slice(0, 6).map((item) => (
             <AnimeCard key={item.id} anime={item} />
           ))}
