@@ -67,7 +67,9 @@ const Anime = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-h-[400px] overflow-y-auto">
           {anime.episodes.length > 0 &&
-            anime.episodes.map((item) => <EpisodeCard episode={item} />)}
+            anime.episodes.map((item) => (
+              <EpisodeCard episode={item} animeId={animeId} isDub={isDub} />
+            ))}
         </div>
 
         <h2 className="text-2xl font-bold my-4">Recommendations</h2>
