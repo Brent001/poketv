@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: "#191825",
+        primary: "#865DFF",
+        secondary: "#E384FF",
+        accent: "#FFA3FD",
+      },
+    },
   },
-  plugins: [require("@vidstack/player/tailwind.cjs")],
+  plugins: [require("daisyui"), require("@vidstack/player/tailwind.cjs")],
 };

@@ -1,85 +1,79 @@
-import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { getAnimeDetails } from "../api/animes";
-import Loading from "../components/Loading";
+import AnimeDetails from "../components/AnimeDetails/AnimeDetails";
+import AnimeCard from "../components/Cards/AnimeCard";
+import EpisodeCard from "../components/Cards/EpisodeCard";
 import Error from "../components/Error";
-import AnimeCard from "../components/AnimeCard";
-import DetailsCard from "../components/DetailsCard";
-import EpisodeCard from "../components/EpisodeCard";
+import Loading from "../components/Loading";
 
 const Anime = () => {
   const { animeId } = useParams();
   const [isDub, setIsDub] = useState(false);
   const toggleDub = () => setIsDub((prev) => !prev);
-  const descElement = useRef(null);
 
   const { data: anime, status } = useQuery({
     queryKey: ["animes", parseInt(animeId), isDub],
     queryFn: () => getAnimeDetails(animeId, isDub),
   });
 
-  useEffect(() => {
-    if (anime && descElement.current)
-      descElement.current.innerHTML = anime.description;
-  }, [anime]);
-
   if (status === "loading") return <Loading />;
   if (status === "error") return <Error />;
 
   return (
-    <>
-      <div
-        className="flex-grow flex bg-cover bg-center bg-fixed"
+    <main>
+      <section
+        className="flex flex-grow bg-cover bg-fixed bg-center"
         style={{
-          background: `url(${anime.cover})`,
+          backgroundImage: `url(${anime.cover})`,
         }}
       >
-        <div className="w-full flex flex-grow backdrop-blur-md bg-[rgba(0,0,0,.4)]">
-          <div className="max-w-[1200px] w-full justify-center mx-auto flex flex-col gap-4 p-4">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-shrink-0 w-[200px] mx-auto md:mx-0">
+        <div className="flex w-full flex-grow">
+          <div className="mx-auto flex w-full max-w-7xl flex-col justify-center gap-4 p-4">
+            <div className="flex flex-col gap-4 md:flex-row">
+              <figure className="mx-auto w-[200px] flex-shrink-0 md:mx-0">
                 <img
                   src={anime.image}
-                  alt={
-                    anime.title.english
-                      ? anime.title.english
-                      : anime.title.native
-                  }
-                  className="w-full h-full object-cover object-center"
+                  title={anime.title?.english || anime.title.native}
+                  alt={anime.title?.english || anime.title.native}
+                  className="h-full w-full object-cover object-center"
                 />
-              </div>
+              </figure>
 
-              <DetailsCard anime={anime} isDub={isDub} toggleDub={toggleDub} />
+              <AnimeDetails anime={anime} isDub={isDub} toggleDub={toggleDub} />
             </div>
 
-            <div className="p-4 rounded-md backdrop-blur-lg bg-[rgba(255,255,255,.5)]">
-              <h4 className="font-bold text-2xl mb-2">Description</h4>
-              <p ref={descElement} className="text-sm"></p>
+            <div className="rounded-md bg-base-300 bg-opacity-80 p-4 backdrop-blur-lg">
+              <h4 className="mb-2 text-2xl font-bold">Description</h4>
+              <p
+                className="text-sm"
+                dangerouslySetInnerHTML={{ __html: anime.description }}
+              ></p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-[1200px] p-4 mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Episodes</h2>
+      <section className="mx-auto max-w-7xl p-4">
+        <h2 className="mb-4 text-2xl font-bold">Episodes</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-h-[400px] overflow-y-auto">
+        <div className="grid max-h-[400px] grid-cols-2 gap-4 overflow-y-auto md:grid-cols-3 lg:grid-cols-5">
           {anime.episodes.length > 0 &&
             anime.episodes.map((item) => (
               <EpisodeCard episode={item} animeId={animeId} isDub={isDub} />
             ))}
         </div>
 
-        <h2 className="text-2xl font-bold my-4">Recommendations</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <h2 className="my-4 text-2xl font-bold">Recommendations</h2>
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
           {anime.recommendations.slice(0, 6).map((item) => (
             <AnimeCard key={item.id} anime={item} />
           ))}
         </div>
-      </div>
-    </>
+      </section>
+    </main>
   );
 };
 

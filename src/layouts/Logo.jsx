@@ -1,21 +1,19 @@
-import React from "react";
-import { MdCatchingPokemon } from "react-icons/md";
+import { TvIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
-const Logo = ({ inverse }) => {
+const Logo = () => {
   return (
-    <Link
-      to="/"
-      className={`uppercase text-lg font-bold flex items-center gap-2 ${
-        inverse ? "text-white" : "text-red-500"
-      } group`}
-    >
-      <MdCatchingPokemon className="text-2xl transition-all group-hover:rotate-45" />
-      <p>
-        <span className={inverse ? "text-white" : "text-black"}>Poke</span>
-        <span>TV</span>
-      </p>
-    </Link>
+    <div className="flex-1">
+      <Link
+        to="/"
+        className="group btn-ghost btn gap-2 text-xl font-bold text-primary"
+      >
+        <TvIcon width={32} />
+        <h3 className="bg-gradient-to-r from-primary to-secondary bg-clip-text normal-case text-transparent transition-all group-hover:bg-gradient-to-l">
+          PokeTV
+        </h3>
+      </Link>
+    </div>
   );
 };
 

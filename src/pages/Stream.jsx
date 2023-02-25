@@ -5,7 +5,7 @@ import { getAnimeDetails, getStreamingLinks } from "../api/animes";
 import Player from "../components/Player";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { BackwardIcon, ForwardIcon } from "@heroicons/react/24/solid";
 
 const Stream = () => {
   const { animeId, episodeId, lang } = useParams();
@@ -39,22 +39,17 @@ const Stream = () => {
   const handleSelect = (e) => navigate(`${baseUlr}/${e.target.value}`);
 
   return (
-    <div
-      className="flex-grow flex"
-      style={{
-        background: `url(${anime.cover})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="w-full flex flex-grow backdrop-blur-md bg-[rgba(0,0,0,.4)]">
-        <div className="max-w-[1200px] bg-slate-200 w-full mx-auto p-4">
-          <div className="mb-4 flex gap-2">
+    <main>
+      <div className="mx-auto flex max-w-7xl flex-col lg:flex-row">
+        <Player sources={stream.sources} />
+
+        <div className="flex flex-col gap-8 p-4">
+          <div className="flex flex-wrap gap-2">
             <select
-              onChange={handleSelect}
               name="episodes"
-              className="p-2 outline-none rounded-md border-2 border-red-500 text-red-500 bg-transparent flex-grow"
+              onChange={handleSelect}
               defaultValue={episodeId}
+              className="select-primary select w-full max-w-md"
             >
               {anime.episodes.map((episode) => (
                 <option key={episode.id} value={episode.id}>
@@ -63,42 +58,30 @@ const Stream = () => {
               ))}
             </select>
 
-            <div className="flex gap-2">
-              {prevEpId && (
-                <Link
-                  to={`${baseUlr}/${prevEpId}`}
-                  className="p-2 text-2xl rounded-md border-2 border-red-500 text-red-500"
-                >
-                  <FiChevronLeft />
-                </Link>
-              )}
+            <Link
+              disabled={!prevEpId}
+              to={`${baseUlr}/${prevEpId}`}
+              className="btn btn-primary btn-square"
+            >
+              <BackwardIcon width={24} />
+            </Link>
 
-              {nextEpId && (
-                <Link
-                  to={`${baseUlr}/${nextEpId}`}
-                  className="p-2 text-2xl rounded-md border-2 border-red-500 text-red-500"
-                >
-                  <FiChevronRight />
-                </Link>
-              )}
-            </div>
+            <Link
+              disabled={!nextEpId}
+              to={`${baseUlr}/${nextEpId}`}
+              className="btn btn-primary btn-square"
+            >
+              <ForwardIcon width={24} />
+            </Link>
           </div>
 
-          <Player sources={stream.sources} />
-
-          <div className="mt-4">
-            <p>
-              <span className="font-medium">
-                Episode {currentEpisode.number}:
-              </span>{" "}
-              {currentEpisode.title}
-            </p>
-            <p className="font-medium mt-2">About the episode: </p>
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold">{currentEpisode.title}</h2>
             <p>{currentEpisode.description}</p>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
